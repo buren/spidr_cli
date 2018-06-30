@@ -68,7 +68,7 @@ RSpec.describe SpidrCLI::Options do
     end
 
     %i[hosts links urls exts].each do |arg|
-      describe arg do
+      describe(arg.to_s) do
         it "has no #{arg} key if no argument given" do
           options = described_class.new([])
           expect(options.spidr_options.key?(arg)).to eq(false)
