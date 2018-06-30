@@ -1,28 +1,68 @@
 # SpidrCLI
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/spidr_cli`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Command Line Interface (CLI) for the excellent [`spidr`](https://github.com/postmodern/spidr) gem.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'spidr_cli'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install with
 
     $ gem install spidr_cli
 
 ## Usage
 
-TODO: Write usage instructions here
+Print all found pages
+
+```
+$ spidr http://solnic.eu/
+```
+
+Print all HTML/JS/CSS pages
+```
+$ spidr --content-types=html,javascript,css http://solnic.eu/
+```
+
+Max 10 pages
+```
+$ spidr --limit=10 http://solnic.eu/
+```
+
+Any method that [`Spidr::Page`](https://github.com/postmodern/spidr/blob/master/lib/spidr/page.rb) responds to you can output, you can also choose to include the header in the output (which is valid CSV)
+```
+$ spidr --columns=code,content_type,url --header http://solnic.eu/
+```
+
+Full usage instructions
+
+```
+Usage: spidr [options] <url>
+        --columns=[val1,val2]        Columns in output
+        --content-types=[val1,val2]  Formats to output (html, javascript, css, json, ..)
+        --[no-]header                Include the header
+        --open-timeout=val           Optional open timeout
+        --read-timeout=val           Optional read timeout
+        --ssl-timeout=val            Optional ssl timeout
+        --continue-timeout=val       Optional continue timeout
+        --keep-alive-timeout=val     Optional keep_alive timeout
+        --proxy-host=val             The host the proxy is running on
+        --proxy-port=val             The port the proxy is running on
+        --proxy-user=val             The user to authenticate as with the proxy
+        --proxy-password=val         The password to authenticate with
+        --default-headers=[key1=val1,key2=val2]
+                                     Default headers to set for every request
+        --host-header=val            The HTTP Host header to use with each request
+        --host-headers=[key1=val1,key2=val2]
+                                     The HTTP Host headers to use for specific hosts
+        --user-agent=val             The User-Agent string to send with each requests
+        --referer=val                The Referer URL to send with each request
+        --delay=val                  The number of seconds to pause between each request
+        --queue=[val1,val2]          The initial queue of URLs to visit
+        --history=[val1,val2]        The initial list of visited URLs
+        --limit=val                  The maximum number of pages to visit
+        --max-depth=val              The maximum link depth to follow
+        --[no-]robots                Respect Robots.txt
+    -h, --help                       How to use
+        --version                    Show version
+```
 
 ## Development
 
