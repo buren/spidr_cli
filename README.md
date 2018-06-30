@@ -10,31 +10,48 @@ Install with
 
 ## Usage
 
-Print all found pages
+Print all found pages on site
 
 ```
-$ spidr http://solnic.eu/
+$ spidr https://jacoburenstam.com/
 ```
 
 Print all HTML/JS/CSS pages
 ```
-$ spidr --content-types=html,javascript,css http://solnic.eu/
+$ spidr --content-types=html,javascript,css https://jacoburenstam.com/
 ```
 
 Max 10 pages
 ```
-$ spidr --limit=10 http://solnic.eu/
+$ spidr --limit=10 https://jacoburenstam.com/
+```
+
+Spidr host
+```
+$ spidr host jacoburenstam.com
+```
+
+Spidr a single site (this is the default)
+```
+$ spidr site https://jacoburenstam.com
+```
+
+Start spidr from URL
+```
+$ spidr start_at https://jacoburenstam.com
 ```
 
 Any method that [`Spidr::Page`](https://github.com/postmodern/spidr/blob/master/lib/spidr/page.rb) responds to you can output, you can also choose to include the header in the output (which is valid CSV)
 ```
-$ spidr --columns=code,content_type,url --header http://solnic.eu/
+$ spidr --columns=code,content_type,url \
+        --header                        \
+        https://jacoburenstam.com/
 ```
 
 Full usage instructions
 
 ```
-Usage: spidr [options] <url>
+Usage: spidr [<strategy>] [options] <url>
         --columns=[val1,val2]        Columns in output
         --content-types=[val1,val2]  Formats to output (html, javascript, css, json, ..)
         --[no-]header                Include the header

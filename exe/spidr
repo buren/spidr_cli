@@ -17,6 +17,7 @@ start_at = options.url
 header = options.header
 columns = options.columns
 content_types = options.content_types
+spidr_method = options.spidr_method
 spidr_options = options.spidr_options
 
 start_at = options.url
@@ -27,7 +28,7 @@ end
 
 # main
 puts CSV.generate_line(columns) if header
-Spidr.site(start_at, spidr_options) do |spider|
+Spidr.public_send(spidr_method, start_at, spidr_options) do |spider|
   spider.every_page do |page|
     next if content_types && content_types.all? { |type| !page.is_content_type?(type) }
 

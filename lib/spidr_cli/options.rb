@@ -2,7 +2,11 @@ require 'optparse'
 
 module SpidrCLI
   class Options
-    attr_reader :url, :columns, :content_types, :header, :spidr_options, :usage_doc
+    # Spidr method
+    METHODS = %w[site start_at host].map { |c| [c, c] }.to_h.freeze
+
+    attr_reader :url, :columns, :content_types, :header, :spidr_options, :usage_doc,
+                :spidr_method
 
     def initialize(argv = ARGV)
       @url = nil
@@ -10,6 +14,7 @@ module SpidrCLI
       @content_types = nil
       @header = false
       @usage_doc = nil
+      @spidr_method = 'site'
       @spidr_options = {}
 
       parse_options(argv)
@@ -19,11 +24,12 @@ module SpidrCLI
 
     def parse_options(argv)
       proxy_options = {}
+      @spidr_method = METHODS[argv.first] if METHODS.key?(argv.first)
 
       OptionParser.new do |parser|
         @usage_doc = parser.to_s
 
-        parser.banner = 'Usage: spidr [options] <url>'
+        parser.banner = 'Usage: spidr [<method>] [options] <url>'
         parser.default_argv = argv
 
         parser.on('--columns=[val1,val2]', Array, 'Columns in output') do |value|
