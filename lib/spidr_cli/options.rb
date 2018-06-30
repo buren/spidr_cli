@@ -51,35 +51,35 @@ module SpidrCLI
         # end
 
         parser.on('--ports=[80, 443]', Array, 'Only spider links on certain ports') do |value|
-          spidr_options[:ports] = value.map { |v| Integer(v) } if value
+          spidr_options[:ports] = to_option_int_array(value) if value
         end
 
         parser.on('--ignore-ports=[8000, 8080, 3000]', Array, 'Do not spider links on certain ports') do |value|
-          spidr_options[:ignore_ports] = value.map { |v| Integer(v) } if value
+          spidr_options[:ignore_ports] = to_option_int_array(value) if value
         end
 
         parser.on('--links=[/blog/]', Array, 'Only spider links on certain link patterns') do |value|
-          spidr_options[:links] = value.map { |v| Regexp.new(v) } if value
+          spidr_options[:links] = to_option_regexp_array(value) if value
         end
 
         parser.on('--ignore-links=[/blog/]', Array, 'Do not spider links on certain link patterns') do |value|
-          spidr_options[:ignore_links] = value.map { |v| Regexp.new(v) } if value
+          spidr_options[:ignore_links] = to_option_regexp_array(value) if value
         end
 
         parser.on('--urls=[/blog/]', Array, 'Only spider links on certain urls') do |value|
-          spidr_options[:urls] = value.map { |v| Regexp.new(v) } if value
+          spidr_options[:urls] = to_option_regexp_array(value) if value
         end
 
         parser.on('--ignore-urls=[/blog/]', Array, 'Do not spider links on certain urls') do |value|
-          spidr_options[:ignore_urls] = value.map { |v| Regexp.new(v) } if value
+          spidr_options[:ignore_urls] = to_option_regexp_array(value) if value
         end
 
         parser.on('--exts=[htm]', Array, 'Only spider links on certain extensions') do |value|
-          spidr_options[:exts] = value.map { |v| Regexp.new(v) } if value
+          spidr_options[:exts] = to_option_regexp_array(value) if value
         end
 
         parser.on('--ignore-exts=[cfm]', Array, 'Do not spider links on certain extensions') do |value|
-          spidr_options[:ignore_exts] = value.map { |v| Regexp.new(v) } if value
+          spidr_options[:ignore_exts] = to_option_regexp_array(value) if value
         end
 
         # Spidr::Agent options
@@ -120,7 +120,7 @@ module SpidrCLI
         end
 
         parser.on('--default-headers=[key1=val1,key2=val2]', Array, 'Default headers to set for every request') do |value|
-          spidr_options[:default_headers] = (value || []).map { |v| v.split('=') }.to_h
+          spidr_options[:default_headers] = option_hash(value || [])
         end
 
         parser.on('--host-header=val', String, 'The HTTP Host header to use with each request') do |value|
@@ -128,7 +128,7 @@ module SpidrCLI
         end
 
         parser.on('--host-headers=[key1=val1,key2=val2]', Array, 'The HTTP Host headers to use for specific hosts') do |value|
-          spidr_options[:host_headers] = (value || []).map { |v| v.split('=') }.to_h
+          spidr_options[:host_headers] = option_hash(value || [])
         end
 
         parser.on('--user-agent=val', String, 'The User-Agent string to send with each requests') do |value|
@@ -177,7 +177,19 @@ module SpidrCLI
 
       spidr_options[:proxy] = proxy_options unless proxy_options.empty?
 
-      @url = ARGV.last
+      @url = argv.last
+    end
+
+    def to_option_int_array(value)
+      value.map { |v| Integer(v) }
+    end
+
+    def to_option_regexp_array(value)
+      value.map { |v| Regexp.new(v) }
+    end
+
+    def option_hash(value)
+      value.map { |v| v.split('=') }.to_h
     end
   end
 end
