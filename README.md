@@ -51,10 +51,13 @@ $ spidr --columns=code,content_type,url \
 Full usage instructions
 
 ```
-Usage: spidr [<strategy>] [options] <url>
+Usage: spidr [<method>] [options] <url>
         --columns=[val1,val2]        Columns in output
         --content-types=[val1,val2]  Formats to output (html, javascript, css, json, ..)
         --[no-]header                Include the header
+        --hosts=[example.com]        Only spider links on certain hosts
+        --ignore-hosts=[www.example.com]
+                                     Do not spider links on certain hosts
         --ports=[80, 443]            Only spider links on certain ports
         --ignore-ports=[8000, 8080, 3000]
                                      Do not spider links on certain ports

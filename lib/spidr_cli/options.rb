@@ -48,13 +48,13 @@ module SpidrCLI
 
         # NOTE: --hosts and --ignore-hosts are overriden when using Spidr::site
         #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
-        # parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts') do |value|
-        #   spidr_options[:hosts] = value.map { |v| Regexp.new(v) } if value
-        # end
-        #
-        # parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts') do |value|
-        #   spidr_options[:ignore_hosts] = value.map { |v| Regexp.new(v) } if value
-        # end
+        parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts') do |value|
+          spidr_options[:hosts] = to_option_regexp_array(value) if value
+        end
+
+        parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts') do |value|
+          spidr_options[:ignore_hosts] = to_option_regexp_array(value) if value
+        end
 
         parser.on('--ports=[80, 443]', Array, 'Only spider links on certain ports') do |value|
           spidr_options[:ports] = to_option_int_array(value) if value

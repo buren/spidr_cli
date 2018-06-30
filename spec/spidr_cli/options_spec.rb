@@ -68,7 +68,7 @@ RSpec.describe SpidrCLI::Options do
       end
     end
 
-    %i[links urls exts].each do |arg|
+    %i[hosts links urls exts].each do |arg|
       describe "#{arg}", focus: true do
         it "has no #{arg} key if no argument given" do
           options = described_class.new([])
