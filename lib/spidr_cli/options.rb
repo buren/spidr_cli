@@ -182,6 +182,11 @@ module SpidrCLI
         end
       end.parse!
 
+      if @spidr_method != 'start_at' &&
+          (spidr_options.key?(:hosts) || spidr_options.key?(:ignore_hosts))
+        raise(ArgumentError, '--hosts and --ignore-hosts argument are only valid if spidr method is "start_at"')
+      end
+
       spidr_options[:proxy] = proxy_options unless proxy_options.empty?
 
       @url = argv.last
