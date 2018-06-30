@@ -1,3 +1,8 @@
+if ENV.fetch('COVERAGE', false)
+  require 'simplecov'
+  SimpleCov.start
+end
+
 require 'bundler/setup'
 require 'spidr_cli'
 
