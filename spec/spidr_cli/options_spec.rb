@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 RSpec.describe SpidrCLI::Options do
   describe '#columns' do
     it 'returns default if no argument given' do
@@ -69,7 +68,7 @@ RSpec.describe SpidrCLI::Options do
     end
 
     %i[hosts links urls exts].each do |arg|
-      describe "#{arg}", focus: true do
+      describe arg do
         it "has no #{arg} key if no argument given" do
           options = described_class.new([])
           expect(options.spidr_options.key?(arg)).to eq(false)
@@ -154,7 +153,7 @@ RSpec.describe SpidrCLI::Options do
       end
     end
 
-    describe "proxy option" do
+    describe 'proxy option' do
       describe 'hash no proxy arguments are present' do
         it 'options has no proxy-key' do
           options = described_class.new([])
