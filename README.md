@@ -1,4 +1,4 @@
-# SpidrCLI
+# SpidrCLI [![Build Status](https://travis-ci.org/buren/spidr_cli.svg?branch=master)](https://travis-ci.org/buren/spidr_cli)
 
 Command Line Interface (CLI) for the excellent [`spidr`](https://github.com/postmodern/spidr) gem.
 
