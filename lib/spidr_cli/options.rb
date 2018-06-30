@@ -2,7 +2,7 @@ require 'optparse'
 
 module SpidrCLI
   class Options
-    # Spidr method
+    # Spidr methods
     METHODS = %w[site start_at host].map { |c| [c, c] }.to_h.freeze
 
     attr_reader :url, :columns, :content_types, :header, :spidr_options, :usage_doc,
@@ -45,14 +45,15 @@ module SpidrCLI
         end
 
         # Spidr::Rules options
-
-        # NOTE: --hosts and --ignore-hosts are overriden when using Spidr::site
+        # NOTE: --hosts is overriden
         #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
-        parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts') do |value|
+        parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts (ignored unless method is "start_at")') do |value|
           spidr_options[:hosts] = to_option_regexp_array(value) if value
         end
 
-        parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts') do |value|
+        # NOTE: --ignore-hosts is overriden
+        #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
+        parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts (ignored unless method is "start_at")') do |value|
           spidr_options[:ignore_hosts] = to_option_regexp_array(value) if value
         end
 
@@ -89,23 +90,23 @@ module SpidrCLI
         end
 
         # Spidr::Agent options
-        parser.on('--open-timeout=val', Integer, 'Optional open timeout') do |value|
+        parser.on('--open-timeout=val', Integer, 'Open timeout') do |value|
           spidr_options[:open_timeout] = value
         end
 
-        parser.on('--read-timeout=val', Integer, 'Optional read timeout') do |value|
+        parser.on('--read-timeout=val', Integer, 'Read timeout') do |value|
           spidr_options[:read_timeout] = value
         end
 
-        parser.on('--ssl-timeout=val', Integer, 'Optional ssl timeout') do |value|
+        parser.on('--ssl-timeout=val', Integer, 'SSL timeout') do |value|
           spidr_options[:ssl_timeout] = value
         end
 
-        parser.on('--continue-timeout=val', Integer, 'Optional continue timeout') do |value|
+        parser.on('--continue-timeout=val', Integer, 'Continue timeout') do |value|
           spidr_options[:continue_timeout] = value
         end
 
-        parser.on('--keep-alive-timeout=val', Integer, 'Optional keep_alive timeout') do |value|
+        parser.on('--keep-alive-timeout=val', Integer, 'Keep alive timeout') do |value|
           spidr_options[:keep_alive_timeout] = value
         end
 
@@ -117,11 +118,11 @@ module SpidrCLI
           proxy_options[:port] = value
         end
 
-        parser.on('--proxy-user=val', String, 'The user to authenticate as with the proxy') do |value|
+        parser.on('--proxy-user=val', String, 'The user to authenticate with the proxy') do |value|
           proxy_options[:user] = value
         end
 
-        parser.on('--proxy-password=val', String, 'The password to authenticate with') do |value|
+        parser.on('--proxy-password=val', String, 'The password to authenticate with the proxy') do |value|
           proxy_options[:password] = value
         end
 
