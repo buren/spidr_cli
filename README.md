@@ -55,9 +55,13 @@ Usage: spidr [<method>] [options] <url>
         --columns=[val1,val2]        Columns in output
         --content-types=[val1,val2]  Formats to output (html, javascript, css, json, ..)
         --[no-]header                Include the header
-        --hosts=[example.com]        Only spider links on certain hosts
+        --[no-]strip-fragments       Specifies whether the Agent will strip URI fragments (default: true)
+        --[no-]strip-query           Specifies whether the Agent will strip URI query (default: false)
+        --schemes=[http,https]       Only spider links with certain scheme
+        --host=[example]             Only spider links on certain host
+        --hosts=[example.com]        Only spider links on certain hosts (ignored unless method is "start_at")
         --ignore-hosts=[www.example.com]
-                                     Do not spider links on certain hosts
+                                     Do not spider links on certain hosts (ignored unless method is "start_at")
         --ports=[80, 443]            Only spider links on certain ports
         --ignore-ports=[8000, 8080, 3000]
                                      Do not spider links on certain ports
@@ -67,15 +71,15 @@ Usage: spidr [<method>] [options] <url>
         --ignore-urls=[/blog/]       Do not spider links on certain urls
         --exts=[htm]                 Only spider links on certain extensions
         --ignore-exts=[cfm]          Do not spider links on certain extensions
-        --open-timeout=val           Optional open timeout
-        --read-timeout=val           Optional read timeout
-        --ssl-timeout=val            Optional ssl timeout
-        --continue-timeout=val       Optional continue timeout
-        --keep-alive-timeout=val     Optional keep_alive timeout
+        --open-timeout=val           Open timeout
+        --read-timeout=val           Read timeout
+        --ssl-timeout=val            SSL timeout
+        --continue-timeout=val       Continue timeout
+        --keep-alive-timeout=val     Keep alive timeout
         --proxy-host=val             The host the proxy is running on
         --proxy-port=val             The port the proxy is running on
-        --proxy-user=val             The user to authenticate as with the proxy
-        --proxy-password=val         The password to authenticate with
+        --proxy-user=val             The user to authenticate with the proxy
+        --proxy-password=val         The password to authenticate with the proxy
         --default-headers=[key1=val1,key2=val2]
                                      Default headers to set for every request
         --host-header=val            The HTTP Host header to use with each request

@@ -43,6 +43,64 @@ RSpec.describe SpidrCLI::Options do
   end
 
   context 'Spidr options' do
+    describe 'strip_fragments' do
+      it 'has no ports key if no argument given' do
+        options = described_class.new([])
+        expect(options.spidr_options.key?(:strip_fragments)).to eq(false)
+      end
+
+      it 'returns --strip-fragments as true' do
+        options = described_class.new(['--strip-fragments'])
+        expect(options.spidr_options[:strip_fragments]).to eq(true)
+      end
+
+      it 'returns --strip-fragments as false' do
+        options = described_class.new(['--no-strip-fragments'])
+        expect(options.spidr_options[:strip_fragments]).to eq(false)
+      end
+    end
+
+    describe 'strip_query' do
+      it 'has no ports key if no argument given' do
+        options = described_class.new([])
+        expect(options.spidr_options.key?(:strip_query)).to eq(false)
+      end
+
+      it 'returns --strip-query as true' do
+        options = described_class.new(['--strip-query'])
+        expect(options.spidr_options[:strip_query]).to eq(true)
+      end
+
+      it 'returns --strip-query as false' do
+        options = described_class.new(['--no-strip-query'])
+        expect(options.spidr_options[:strip_query]).to eq(false)
+      end
+    end
+
+    describe 'schemes' do
+      it 'has no ports key if no argument given' do
+        options = described_class.new([])
+        expect(options.spidr_options.key?(:schemes)).to eq(false)
+      end
+
+      it 'returns schemes argument as Array<String>' do
+        options = described_class.new(['--schemes=http,https'])
+        expect(options.spidr_options[:schemes]).to eq(%w[http https])
+      end
+    end
+
+    describe 'host' do
+      it 'has no ports key if no argument given' do
+        options = described_class.new([])
+        expect(options.spidr_options.key?(:host)).to eq(false)
+      end
+
+      it 'returns host argument as String' do
+        options = described_class.new(['--host=example.com'])
+        expect(options.spidr_options[:host]).to eq('example.com')
+      end
+    end
+
     describe 'ports' do
       it 'has no ports key if no argument given' do
         options = described_class.new([])
@@ -75,7 +133,7 @@ RSpec.describe SpidrCLI::Options do
         end
 
         it "returns #{arg} argument as Array<Regexp>" do
-          options = described_class.new(["--#{arg}=/blog/"])
+          options = described_class.new(['start_at', "--#{arg}=/blog/"])
           expect(options.spidr_options[arg]).to eq([/\/blog\//])
         end
       end
@@ -87,7 +145,7 @@ RSpec.describe SpidrCLI::Options do
         end
 
         it "returns ignore_#{arg} argument as Array<Regexp>" do
-          options = described_class.new(["--ignore-#{arg}=/blog/"])
+          options = described_class.new(['start_at', "--ignore-#{arg}=/blog/"])
           expect(options.spidr_options[:"ignore_#{arg}"]).to eq([/\/blog\//])
         end
       end

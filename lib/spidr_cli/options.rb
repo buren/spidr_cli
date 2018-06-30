@@ -44,7 +44,24 @@ module SpidrCLI
           @header = value
         end
 
-        # Spidr::Rules options
+        # Spidr::Sanitizers options
+        parser.on('--[no-]strip-fragments', 'Specifies whether the Agent will strip URI fragments (default: true)') do |value|
+          spidr_options[:strip_fragments] = value
+        end
+
+        parser.on('--[no-]strip-query', 'Specifies whether the Agent will strip URI query (default: false)') do |value|
+          spidr_options[:strip_query] = value
+        end
+
+        # Spidr::Filters options
+        parser.on('--schemes=[http,https]', Array, 'Only spider links with certain scheme') do |value|
+          spidr_options[:schemes] = value if value
+        end
+
+        parser.on('--host=[example]', String, 'Only spider links on certain host') do |value|
+          spidr_options[:host] = value if value
+        end
+
         # NOTE: --hosts is overriden
         #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
         parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts (ignored unless method is "start_at")') do |value|
