@@ -9,3 +9,9 @@
 
 # rspec failure tracking
 .rspec_status
+
+# Ignore dependency lock files
+Gemfile.lock
+
+# Ignore byebug files
+.byebug_history
