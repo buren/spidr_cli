@@ -44,6 +44,56 @@ RSpec.describe SpidrCLI::Options do
   end
 
   context 'Spidr options' do
+    describe 'ports' do
+      it 'has no ports key if no argument given' do
+        options = described_class.new([])
+        expect(options.spidr_options.key?(:ports)).to eq(false)
+      end
+
+      it 'returns ports argument as Array<Integer>' do
+        options = described_class.new(['--ports=1,3000'])
+        expect(options.spidr_options[:ports]).to eq([1, 3000])
+      end
+    end
+
+    describe 'ignore_ports' do
+      it 'has no ignore_ports key if no argument given' do
+        options = described_class.new([])
+        expect(options.spidr_options.key?(:ignore_ports)).to eq(false)
+      end
+
+      it 'returns ignore_ports argument as Array<Integer>' do
+        options = described_class.new(['--ignore-ports=1,3000'])
+        expect(options.spidr_options[:ignore_ports]).to eq([1, 3000])
+      end
+    end
+
+    %i[links urls exts].each do |arg|
+      describe "#{arg}", focus: true do
+        it "has no #{arg} key if no argument given" do
+          options = described_class.new([])
+          expect(options.spidr_options.key?(arg)).to eq(false)
+        end
+
+        it "returns #{arg} argument as Array<Regexp>" do
+          options = described_class.new(["--#{arg}=/blog/"])
+          expect(options.spidr_options[arg]).to eq([/\/blog\//])
+        end
+      end
+
+      describe "ignore_#{arg}" do
+        it "has no ignore_#{arg} key if no argument given" do
+          options = described_class.new([])
+          expect(options.spidr_options.key?(:"ignore_#{arg}")).to eq(false)
+        end
+
+        it "returns ignore_#{arg} argument as Array<Regexp>" do
+          options = described_class.new(["--ignore-#{arg}=/blog/"])
+          expect(options.spidr_options[:"ignore_#{arg}"]).to eq([/\/blog\//])
+        end
+      end
+    end
+
     describe 'open_timeout' do
       it 'has no open_timeout key if no argument given' do
         options = described_class.new([])

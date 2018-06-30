@@ -38,6 +38,50 @@ module SpidrCLI
           @header = value
         end
 
+        # Spidr::Rules options
+
+        # NOTE: --hosts and --ignore-hosts are overriden when using Spidr::site
+        #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
+        # parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts') do |value|
+        #   spidr_options[:hosts] = value.map { |v| Regexp.new(v) } if value
+        # end
+        #
+        # parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts') do |value|
+        #   spidr_options[:ignore_hosts] = value.map { |v| Regexp.new(v) } if value
+        # end
+
+        parser.on('--ports=[80, 443]', Array, 'Only spider links on certain ports') do |value|
+          spidr_options[:ports] = value.map { |v| Integer(v) } if value
+        end
+
+        parser.on('--ignore-ports=[8000, 8080, 3000]', Array, 'Do not spider links on certain ports') do |value|
+          spidr_options[:ignore_ports] = value.map { |v| Integer(v) } if value
+        end
+
+        parser.on('--links=[/blog/]', Array, 'Only spider links on certain link patterns') do |value|
+          spidr_options[:links] = value.map { |v| Regexp.new(v) } if value
+        end
+
+        parser.on('--ignore-links=[/blog/]', Array, 'Do not spider links on certain link patterns') do |value|
+          spidr_options[:ignore_links] = value.map { |v| Regexp.new(v) } if value
+        end
+
+        parser.on('--urls=[/blog/]', Array, 'Only spider links on certain urls') do |value|
+          spidr_options[:urls] = value.map { |v| Regexp.new(v) } if value
+        end
+
+        parser.on('--ignore-urls=[/blog/]', Array, 'Do not spider links on certain urls') do |value|
+          spidr_options[:ignore_urls] = value.map { |v| Regexp.new(v) } if value
+        end
+
+        parser.on('--exts=[htm]', Array, 'Only spider links on certain extensions') do |value|
+          spidr_options[:exts] = value.map { |v| Regexp.new(v) } if value
+        end
+
+        parser.on('--ignore-exts=[cfm]', Array, 'Do not spider links on certain extensions') do |value|
+          spidr_options[:ignore_exts] = value.map { |v| Regexp.new(v) } if value
+        end
+
         # Spidr::Agent options
         parser.on('--open-timeout=val', Integer, 'Optional open timeout') do |value|
           spidr_options[:open_timeout] = value

@@ -38,6 +38,15 @@ Usage: spidr [options] <url>
         --columns=[val1,val2]        Columns in output
         --content-types=[val1,val2]  Formats to output (html, javascript, css, json, ..)
         --[no-]header                Include the header
+        --ports=[80, 443]            Only spider links on certain ports
+        --ignore-ports=[8000, 8080, 3000]
+                                     Do not spider links on certain ports
+        --links=[/blog/]             Only spider links on certain link patterns
+        --ignore-links=[/blog/]      Do not spider links on certain link patterns
+        --urls=[/blog/]              Only spider links on certain urls
+        --ignore-urls=[/blog/]       Do not spider links on certain urls
+        --exts=[htm]                 Only spider links on certain extensions
+        --ignore-exts=[cfm]          Do not spider links on certain extensions
         --open-timeout=val           Optional open timeout
         --read-timeout=val           Optional read timeout
         --ssl-timeout=val            Optional ssl timeout
@@ -77,3 +86,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/buren/
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Thanks
+
+Huge thanks to [@postmodern](https://github.com/postmodern) for creating [`spidr`](https://github.com/postmodern/spidr) :star:
