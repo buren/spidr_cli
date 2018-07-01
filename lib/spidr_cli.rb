@@ -1,3 +1,4 @@
+require 'spidr'
 require 'spidr_cli/version'
 require 'spidr_cli/options'
 

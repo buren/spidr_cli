@@ -194,7 +194,7 @@ module SpidrCLI
         end
 
         parser.on_tail('--version', 'Show version') do
-          puts "Spidr version #{Spidr::VERSION}"
+          puts "Spidr version #{Spidr::VERSION} (SpidrCLI version #{SpidrCLI::VERSION})"
           exit
         end
       end.parse!

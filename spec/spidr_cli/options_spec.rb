@@ -125,6 +125,14 @@ RSpec.describe SpidrCLI::Options do
       end
     end
 
+    %w[--hosts --ignore-hosts].each do |arg|
+      it "raises ArgumentError if #{arg} is present and spidr method is not 'start_at'" do
+        expect do
+          described_class.new(['site', '--hosts=example.com'])
+        end.to raise_error(ArgumentError)
+      end
+    end
+
     %i[hosts links urls exts].each do |arg|
       describe(arg.to_s) do
         it "has no #{arg} key if no argument given" do
@@ -405,6 +413,13 @@ RSpec.describe SpidrCLI::Options do
     it 'returns true if given --no-robots' do
       options = described_class.new(['--no-robots'])
       expect(options.spidr_options[:robots]).to eq(false)
+    end
+  end
+
+  %w[--version -v --help -h].each do |arg|
+    it "has #{arg} option" do
+      argv = [arg]
+      expect { described_class.new(argv) }.to raise_error(SystemExit)
     end
   end
 end
