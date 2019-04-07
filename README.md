@@ -59,9 +59,9 @@ Usage: spidr [<method>] [options] <url>
         --[no-]strip-query           Specifies whether the Agent will strip URI query (default: false)
         --schemes=[http,https]       Only spider links with certain scheme
         --host=[example]             Only spider links on certain host
-        --hosts=[example.com]        Only spider links on certain hosts (ignored unless method is "start_at")
+        --hosts=[example.com]        Only spider links on certain hosts (ignored unless method is "start_at" or "site")
         --ignore-hosts=[www.example.com]
-                                     Do not spider links on certain hosts (ignored unless method is "start_at")
+                                     Do not spider links on certain hosts (ignored unless method is "start_at" or "site")
         --ports=[80, 443]            Only spider links on certain ports
         --ignore-ports=[8000, 8080, 3000]
                                      Do not spider links on certain ports

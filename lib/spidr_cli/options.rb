@@ -64,13 +64,13 @@ module SpidrCLI
 
         # NOTE: --hosts is overriden
         #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
-        parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts (ignored unless method is "start_at")') do |value|
+        parser.on('--hosts=[example.com]', Array, 'Only spider links on certain hosts (ignored unless method is "start_at" or "site")') do |value|
           spidr_options[:hosts] = to_option_regexp_array(value) if value
         end
 
         # NOTE: --ignore-hosts is overriden
         #   @see https://github.com/postmodern/spidr/blob/master/lib/spidr/agent.rb#L273
-        parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts (ignored unless method is "start_at")') do |value|
+        parser.on('--ignore-hosts=[www.example.com]', Array, 'Do not spider links on certain hosts (ignored unless method is "start_at" or "site")') do |value|
           spidr_options[:ignore_hosts] = to_option_regexp_array(value) if value
         end
 
@@ -201,7 +201,7 @@ module SpidrCLI
 
       if @spidr_method != 'start_at' &&
           (spidr_options.key?(:hosts) || spidr_options.key?(:ignore_hosts))
-        raise(ArgumentError, '--hosts and --ignore-hosts argument are only valid if spidr method is "start_at"')
+        raise(ArgumentError, '--hosts and --ignore-hosts argument are only valid if spidr method is "start_at" or "site"')
       end
 
       spidr_options[:proxy] = proxy_options unless proxy_options.empty?
